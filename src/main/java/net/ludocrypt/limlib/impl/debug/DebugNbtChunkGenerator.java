@@ -54,6 +54,7 @@ import net.minecraft.world.gen.chunk.Blender;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
 import net.minecraft.world.gen.noise.NoiseConfig;
+import org.jetbrains.annotations.ApiStatus;
 
 public class DebugNbtChunkGenerator extends AbstractNbtChunkGenerator {
 
@@ -217,8 +218,6 @@ public class DebugNbtChunkGenerator extends AbstractNbtChunkGenerator {
 			if (region.getBlockEntity(pos) != null)
 				region.getBlockEntity(pos).readNbt(nbt);
 		});
-	}
-	public void method_40450(List<String> list, NoiseConfig randomState, BlockPos pos) {
 	}
 
 	public static class DebugNbtGroup extends NbtGroup {

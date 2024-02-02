@@ -10,10 +10,10 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 
 @Mixin(Registries.class)
-public interface RegistriesAccessor {
+public class RegistriesAccessor {
 
-	@Invoker
-	static <T> Registry<T> callRegisterSimple(RegistryKey<? extends Registry<T>> registryKey, Lifecycle lifecycle,
+
+	public static <T> Registry<T> callRegisterSimple(RegistryKey<? extends Registry<T>> registryKey, Lifecycle lifecycle,
 			Registries.Initializer<T> bootstrap) {
 		throw new UnsupportedOperationException();
 	}
