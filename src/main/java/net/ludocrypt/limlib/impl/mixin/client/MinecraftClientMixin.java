@@ -34,8 +34,8 @@ public class MinecraftClientMixin {
 	@Shadow
 	private Window window;
 
-	@Inject(method = "getMusic", at = @At("HEAD"), cancellable = true)
-	private void limlib$getMusic(CallbackInfoReturnable<MusicSound> ci) {
+	@Inject(method = "getMusicType", at = @At("HEAD"), cancellable = true)
+	private void limlib$getMusicType(CallbackInfoReturnable<MusicSound> ci) {
 
 		if (this.player != null) {
 			Optional<SoundEffects> soundEffects = LookupGrabber

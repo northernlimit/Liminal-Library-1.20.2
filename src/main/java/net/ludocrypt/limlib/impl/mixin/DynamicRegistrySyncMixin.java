@@ -3,6 +3,7 @@ package net.ludocrypt.limlib.impl.mixin;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import net.ludocrypt.limlib.api.effects.sky.ModDimensionEffects;
+import net.minecraft.registry.SerializableRegistries;
 import net.minecraft.registry.entry.RegistryElementCodec;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,10 +21,12 @@ import net.ludocrypt.limlib.api.skybox.Skybox;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 
-@Mixin(RegistryElementCodec.class)
+@Mixin(SerializableRegistries.class)
 public abstract class DynamicRegistrySyncMixin {
 
-	@Inject(method = "method_45958()Lcom/google/common/collect/ImmutableMap;", at = @At(value = "INVOKE", target = "Lnet/minecraft/registry/entry/RegistryElementCodec;addSyncedRegistry(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V", ordinal = 2, shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "method_45958()Lcom/google/common/collect/ImmutableMap;", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/registry/SerializableRegistries;add(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V",
+			ordinal = 2, shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
 	private static void limlib$makeMap$mapped(
 			CallbackInfoReturnable<ImmutableMap<RegistryKey<? extends Registry<?>>, RegistryElementCodec<?>>> ci,
 			Builder<RegistryKey<? extends Registry<?>>, RegistryElementCodec<?>> builder) {

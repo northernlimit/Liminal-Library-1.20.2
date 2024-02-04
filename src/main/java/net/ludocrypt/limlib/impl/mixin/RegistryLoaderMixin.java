@@ -48,18 +48,18 @@ public class RegistryLoaderMixin {
 	@Shadow
 	@Final
 	@Mutable
-	public static List<RegistryLoader.Entry<?>> WORLDGEN_REGISTRIES;
+	public static List<RegistryLoader.Entry<?>> DYNAMIC_REGISTRIES;
 	static {
 		List<RegistryLoader.Entry<?>> newRegistries = Lists.newArrayList();
-		newRegistries.addAll(WORLDGEN_REGISTRIES);
+		newRegistries.addAll(DYNAMIC_REGISTRIES);
 		newRegistries.add(new RegistryLoader.Entry<>(PostEffect.POST_EFFECT_KEY, PostEffect.CODEC));
 		newRegistries.add(new RegistryLoader.Entry<>(ModDimensionEffects.DIMENSION_EFFECTS_KEY, ModDimensionEffects.CODEC));
 		newRegistries.add(new RegistryLoader.Entry<>(SoundEffects.SOUND_EFFECTS_KEY, SoundEffects.CODEC));
 		newRegistries.add(new RegistryLoader.Entry<>(Skybox.SKYBOX_KEY, Skybox.CODEC));
-		WORLDGEN_REGISTRIES = newRegistries;
+		DYNAMIC_REGISTRIES = newRegistries;
 	}
 
-	@Inject(method = "loadRegistryContents(Lnet/minecraft/registry/RegistryOps$RegistryInfoLookup;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/registry/MutableRegistry;Lcom/mojang/serialization/Decoder;Ljava/util/Map;)V", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/Decoder;parse(Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;", shift = Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "load(Lnet/minecraft/registry/RegistryOps$RegistryInfoGetter;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/registry/MutableRegistry;Lcom/mojang/serialization/Decoder;Ljava/util/Map;)V", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/Decoder;parse(Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;", shift = Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
 	private static <E> void limlib$loadRegistryContents(RegistryOps.RegistryInfoGetter infoLookup,
 														ResourceManager resourceManager, RegistryKey<? extends Registry<E>> registryKey, MutableRegistry<E> registry,
 														Decoder<E> decoder, Map<RegistryKey<?>, Exception> readFailures, CallbackInfo ci, String string,
@@ -94,7 +94,7 @@ public class RegistryLoaderMixin {
 				.register(infoLookup, registryKey, registryOps, jsonElement)));
 	}
 
-	@Inject(method = "loadRegistryContents(Lnet/minecraft/registry/RegistryOps$RegistryInfoLookup;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/registry/MutableRegistry;Lcom/mojang/serialization/Decoder;Ljava/util/Map;)V", at = @At("TAIL"))
+	@Inject(method = "load(Lnet/minecraft/registry/RegistryOps$RegistryInfoGetter;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/registry/MutableRegistry;Lcom/mojang/serialization/Decoder;Ljava/util/Map;)V", at = @At("TAIL"))
 	private static <E> void limlib$loadRegistryContents(RegistryOps.RegistryInfoGetter infoLookup,
 			ResourceManager resourceManager, RegistryKey<? extends Registry<E>> registryKey, MutableRegistry<E> registry,
 			Decoder<E> decoder, Map<RegistryKey<?>, Exception> readFailures, CallbackInfo ci) {
@@ -112,7 +112,7 @@ public class RegistryLoaderMixin {
 			.forEach((registrarhook -> ((LimlibRegistryHook<E>) registrarhook).register(infoLookup, registryKey, registry)));
 	}
 
-	@Inject(method = "loadRegistriesIntoManager(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/registry/DynamicRegistryManager;Ljava/util/List;)Lnet/minecraft/registry/DynamicRegistryManager$Frozen;", at = @At("TAIL"))
+	@Inject(method = "load(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/registry/DynamicRegistryManager;Ljava/util/List;)Lnet/minecraft/registry/DynamicRegistryManager$Immutable;", at = @At("TAIL"))
 	private static void limlib$loadRegistriesIntoManager(ResourceManager resourceManager,
 			DynamicRegistryManager registryManager, List<RegistryLoader.Entry<?>> decodingData,
 			CallbackInfoReturnable<DynamicRegistryManager.Immutable> ci) {

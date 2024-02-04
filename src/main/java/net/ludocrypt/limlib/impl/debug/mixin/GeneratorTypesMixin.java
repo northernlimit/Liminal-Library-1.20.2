@@ -20,7 +20,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 @Mixin(WorldPresets.class)
 public class GeneratorTypesMixin {
 
-	@Inject(method = "getKey", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getWorldPreset", at = @At("HEAD"), cancellable = true)
 	private static void limlib$getKey(Registry<DimensionOptions> registry,
 									  CallbackInfoReturnable<Optional<RegistryKey<WorldPreset>>> ci) {
 		Optional<RegistryKey<WorldPreset>> optional = registry

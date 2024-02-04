@@ -25,16 +25,16 @@ public class WorldDimensionsMixin {
 	@Shadow
 	@Final
 	@Mutable
-	private static Set<RegistryKey<DimensionOptions>> VANILLA_DIMENSION_KEYS;
+	private static Set<RegistryKey<DimensionOptions>> VANILLA_KEYS;
 
 	@Inject(method = "<clinit>", at = @At(value = "INVOKE", target = "Ljava/util/Set;size()I", shift = Shift.BEFORE, ordinal = 0))
 	private static void limlib$clinit(CallbackInfo ci) {
 		Set<RegistryKey<DimensionOptions>> dimensions = Sets.newHashSet();
-		dimensions.addAll(VANILLA_DIMENSION_KEYS);
+		dimensions.addAll(VANILLA_KEYS);
 		LimlibWorld.LIMLIB_WORLD
 			.getEntrySet()
 			.forEach((entry) -> dimensions.add(RegistryKey.of(RegistryKeys.DIMENSION, entry.getKey().getValue())));
-		VANILLA_DIMENSION_KEYS = dimensions;
+		VANILLA_KEYS = dimensions;
 	}
 
 }

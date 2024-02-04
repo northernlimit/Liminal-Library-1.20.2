@@ -48,7 +48,7 @@ public class ServerWorldMixin implements ServerWorldMazeAccess {
 
 	}
 
-	@Inject(method = "saveWorld", at = @At("TAIL"))
+	@Inject(method = "saveLevel", at = @At("TAIL"))
 	private void limlib$saveWorld(CallbackInfo ci) {
 
 		if (this.mazeStorage != null) {
