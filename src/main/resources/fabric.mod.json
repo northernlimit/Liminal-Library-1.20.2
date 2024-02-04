@@ -3,14 +3,14 @@
 	"id": "limlib",
 	"version": "${version}",
 	"name": "Liminal Library",
-	"description": "This mod implements a bunch of interesting features. Be prepared for anything",
+	"description": "Library for liminal space dimensions",
 	"authors": [
 		"Ludocrypt"
 	],
 	"contact": {
 		"homepage": "https://github.com/LudoCrypt/Liminal-Library/wiki",
 		"issues": "https://github.com/LudoCrypt/Liminal-Library/issues",
-		"sources": "https://github.com/LudoCrypt/Liminal-Library"
+		"sources": "https://github.com/northernlimit/Liminal-Library-1.20.2"
 	},
 	"icon": "assets/limlib/icon.png",
 	"intermediate_mappings": "net.fabricmc:intermediary",
