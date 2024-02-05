@@ -21,6 +21,7 @@ import net.ludocrypt.limlib.api.skybox.Skybox;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 
+
 @Mixin(SerializableRegistries.class)
 public abstract class DynamicRegistrySyncMixin {
 
@@ -30,14 +31,14 @@ public abstract class DynamicRegistrySyncMixin {
 	private static void limlib$makeMap$mapped(
 			CallbackInfoReturnable<ImmutableMap<RegistryKey<? extends Registry<?>>, RegistryElementCodec<?>>> ci,
 			Builder<RegistryKey<? extends Registry<?>>, RegistryElementCodec<?>> builder) {
-		addSyncedRegistry(builder, PostEffect.POST_EFFECT_KEY, PostEffect.CODEC);
-		addSyncedRegistry(builder, ModDimensionEffects.DIMENSION_EFFECTS_KEY, ModDimensionEffects.CODEC);
-		addSyncedRegistry(builder, SoundEffects.SOUND_EFFECTS_KEY, SoundEffects.CODEC);
-		addSyncedRegistry(builder, Skybox.SKYBOX_KEY, Skybox.CODEC);
+		add(builder, PostEffect.POST_EFFECT_KEY, PostEffect.CODEC);
+		add(builder, ModDimensionEffects.DIMENSION_EFFECTS_KEY, ModDimensionEffects.CODEC);
+		add(builder, SoundEffects.SOUND_EFFECTS_KEY, SoundEffects.CODEC);
+		add(builder, Skybox.SKYBOX_KEY, Skybox.CODEC);
 	}
 
 	@Shadow
-	private native static <E> void addSyncedRegistry(
+	private native static <E> void add(
 			Builder<RegistryKey<? extends Registry<?>>, RegistryElementCodec<?>> builder,
 			RegistryKey<? extends Registry<E>> registryKey, Codec<E> codec);
 
